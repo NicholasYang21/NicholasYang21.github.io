@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>操作系统学习笔记（一）引导扇区</title>
+      <link href="/2022/01/30/MBR-Studing/"/>
+      <url>/2022/01/30/MBR-Studing/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>此笔记不为UEFI，且是为了探究底层而写。</p><h1 id="主引导记录-Master-Boot-Record"><a href="#主引导记录-Master-Boot-Record" class="headerlink" title="主引导记录 (Master Boot Record)"></a>主引导记录 (Master Boot Record)</h1><p>计算机在启动时，会读取一个扇区共$512Bytes$的数据，当这个扇区的结尾为0x55, 0xAA时，就表明这个设备是用户想要用于启动计算机的设备。这$512Bytes$被称为<strong>“主引导记录(Master Boot Record)”</strong>.接下来，它会被读取到内存地址<strong>0x7C00</strong>，并从这个地址开始运行程序。</p><h1 id="MBR标准格式"><a href="#MBR标准格式" class="headerlink" title="MBR标准格式"></a>MBR标准格式</h1><p><img src="https://pic3.zhimg.com/80/v2-b19a5ed36aeec1ce5fe08a65e546fdce_720w.jpg"></p><h1 id="使用NASM制作MBR"><a href="#使用NASM制作MBR" class="headerlink" title="使用NASM制作MBR"></a>使用NASM制作MBR</h1><p>注：此处镜像为1.44MB标准软盘容量。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">mbrsgmt equ 7c0h</span><br><span class="line"></span><br><span class="line">jmp start</span><br><span class="line">msg: db &#x27;hello,world&#x27;,&#x27;$&#x27;</span><br><span class="line"></span><br><span class="line">start:</span><br><span class="line">mov ax,mbrsgmt</span><br><span class="line">mov ds,ax</span><br><span class="line">mov si,msg</span><br><span class="line">call print</span><br><span class="line">jmp $ ; 死循环</span><br><span class="line"></span><br><span class="line">print:</span><br><span class="line">mov al,[si]</span><br><span class="line">cmp al,&#x27;$&#x27;</span><br><span class="line">je displayend</span><br><span class="line">mov ah,0eh</span><br><span class="line">int 10h</span><br><span class="line">inc si</span><br><span class="line">jmp print</span><br><span class="line"></span><br><span class="line">displayend:</span><br><span class="line">ret</span><br><span class="line"></span><br><span class="line">times 510($-$$) db 0</span><br><span class="line">db 0x55,0xaa</span><br><span class="line"></span><br><span class="line">times 1474560-($-$$) db 0</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> OS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> OS </tag>
+            
+            <tag> 自制操作系统 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>迟来的——2021年度总结</title>
+      <link href="/2022/01/30/%E8%BF%9F%E6%9D%A5%E7%9A%84%E2%80%94%E2%80%942021%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
+      <url>/2022/01/30/%E8%BF%9F%E6%9D%A5%E7%9A%84%E2%80%94%E2%80%942021%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CSP-J-爆炸"><a href="#CSP-J-爆炸" class="headerlink" title="CSP-J 爆炸"></a>CSP-J 爆炸</h1><p>不废话了。</p><p>今年第一次参加OI，果然项目狗还是打不过OIer.</p><p>CSP-J初赛$52.5 pts$,刚好过重庆线，复赛$90 pts$，人原地爆炸。</p><p>三等妥妥的，cqbz yb校区唯一一个拿了等级的可还行。</p><p>$T1: 90pts$</p><p>$T2: 0pts$</p><p>$T3: 0pts$</p><p>$T4: 0pts$</p><p>原本绝对的把握100+，结果<del>CCF</del>€€￡的环境导致$T3$直接死，$T1$缺$10pts$.</p><p>调试时：$T3 TLE$, 但绝对不是$0pts$.</p><h1 id="立项全咕"><a href="#立项全咕" class="headerlink" title="立项全咕"></a>立项全咕</h1><p>我承认我咕了。</p><p>1.HackBit <del>咕咕两年祭</del></p><p>2.FireLang <del>咕咕半年祭</del></p><h1 id="Reports"><a href="#Reports" class="headerlink" title="Reports"></a>Reports</h1><p>1.Discord, GMail注册成功。</p><p>2.项目：</p><h3 id="1-基于CLI的RPG-HackBit。"><a href="#1-基于CLI的RPG-HackBit。" class="headerlink" title="1.基于CLI的RPG HackBit。"></a>1.基于CLI的RPG HackBit。</h3><h3 id="2-个人博客重造（已完成，不然你看不到这篇文章）。"><a href="#2-个人博客重造（已完成，不然你看不到这篇文章）。" class="headerlink" title="2.个人博客重造（已完成，不然你看不到这篇文章）。"></a>2.个人博客重造（已完成，不然你看不到这篇文章）。</h3><h3 id="3-基于Python-flask框架的在线评测系统RelexOJ。"><a href="#3-基于Python-flask框架的在线评测系统RelexOJ。" class="headerlink" title="3.基于Python flask框架的在线评测系统RelexOJ。"></a>3.基于Python flask框架的在线评测系统RelexOJ。</h3><h3 id="4-基于OpenGL的3D动画游戏引擎RelexEngine。"><a href="#4-基于OpenGL的3D动画游戏引擎RelexEngine。" class="headerlink" title="4.基于OpenGL的3D动画游戏引擎RelexEngine。"></a>4.基于OpenGL的3D动画游戏引擎RelexEngine。</h3><p>感谢。</p><p>新的一年拜托了。</p><p>最后</p><h1 id="新年快乐。"><a href="#新年快乐。" class="headerlink" title="新年快乐。"></a>新年快乐。</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日常 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
