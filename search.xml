@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>POJ 1852 Ants 题解</title>
+      <link href="/2022/04/16/POJ-1852-Ants/"/>
+      <url>/2022/04/16/POJ-1852-Ants/</url>
+      
+        <content type="html"><![CDATA[<p><a href="http://poj.org/problem?id=1852">原题目（英语题面）</a></p><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一群蚂蚁在长度为$L\ cm$的水平杆上行走，每只蚂蚁以 1 cm/s 的恒定速度行走。当一只行走的蚂蚁到达杆子的一端时，它会立即从杆子上掉下来。当两只蚂蚁相遇时，它们会转身并开始朝相反的方向行走。我们知道蚂蚁在杆子上的原始位置，不幸的是，我们不知道蚂蚁行走的方向。你的任务是计算所有蚂蚁从杆子上掉下来的最早和最晚可能的时间。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 题解 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> OI </tag>
+            
+            <tag> 题解 </tag>
+            
+            <tag> POJ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>操作系统学习笔记（二）跳出MBR限制区域（前半段）</title>
       <link href="/2022/02/01/MBR-Jumpout-1/"/>
       <url>/2022/02/01/MBR-Jumpout-1/</url>
