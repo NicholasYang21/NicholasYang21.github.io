@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>opengl-know-what-is-the-opengl-note | Ink's Blog</title><meta name="keywords" content="笔记,计算机图形学,OpenGL"><meta name="author" content="Mt. ST Maker aka Ink"><meta name="copyright" content="Mt. ST Maker aka Ink"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="注意：与此笔记关联的OpenGL版本为3.3 OpenGLOpenGL本身只是一个标准，由Khronos组织维护，OpenGL标准不是一个API，基于此标准的API通常是由显卡生产商开发的。 核心模式、立即渲染模式 Core Profile &amp; Immediate mode 立即渲染模式  早期OpenGL规范使用立即渲染模式（固定渲染管线）。立即渲染模式下绘制图形十分方便，但效率低，库隐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opengl-know-what-is-the-opengl-note">
+<meta property="og:url" content="http://example.com/2022/05/14/opengl-know-what-is-the-opengl-note/index.html">
+<meta property="og:site_name" content="Ink&#39;s Blog">
+<meta property="og:description" content="注意：与此笔记关联的OpenGL版本为3.3 OpenGLOpenGL本身只是一个标准，由Khronos组织维护，OpenGL标准不是一个API，基于此标准的API通常是由显卡生产商开发的。 核心模式、立即渲染模式 Core Profile &amp; Immediate mode 立即渲染模式  早期OpenGL规范使用立即渲染模式（固定渲染管线）。立即渲染模式下绘制图形十分方便，但效率低，库隐">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/opengl-1-cover.png">
+<meta property="article:published_time" content="2022-05-14T06:59:37.000Z">
+<meta property="article:modified_time" content="2022-05-14T08:22:52.636Z">
+<meta property="article:author" content="Mt. ST Maker aka Ink">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="计算机图形学">
+<meta property="article:tag" content="OpenGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/opengl-1-cover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/05/14/opengl-know-what-is-the-opengl-note/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":100,"position":"top","messagePrev":"注意","messageNext":"这篇文章距离上次更新已有100天以上，文章内容可能过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'opengl-know-what-is-the-opengl-note',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2022-05-14 16:22:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/xxx.css"><meta name="generator" content="Hexo 6.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/opengl-1.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ink's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">opengl-know-what-is-the-opengl-note</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-05-14T06:59:37.000Z" title="发表于 2022-05-14 14:59:37">2022-05-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-05-14T08:22:52.636Z" title="更新于 2022-05-14 16:22:52">2022-05-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/OpenGL/">OpenGL</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">792</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="opengl-know-what-is-the-opengl-note"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>注意：与此笔记关联的OpenGL版本为3.3</strong></p>
+<h2 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h2><p>OpenGL本身只是一个<strong>标准</strong>，由Khronos组织维护，OpenGL标准不是一个API，基于此标准的API通常是由显卡生产商开发的。</p>
+<h2 id="核心模式、立即渲染模式-Core-Profile-amp-Immediate-mode"><a href="#核心模式、立即渲染模式-Core-Profile-amp-Immediate-mode" class="headerlink" title="核心模式、立即渲染模式 Core Profile &amp; Immediate mode"></a>核心模式、立即渲染模式 Core Profile &amp; Immediate mode</h2><blockquote>
+<p>立即渲染模式</p>
+</blockquote>
+<p>早期OpenGL规范使用立即渲染模式（固定渲染管线）。立即渲染模式下绘制图形十分方便，但效率低，库隐藏了OpenGL的大多数功能，很难控制OpenGL的计算过程。</p>
+<p>从OpenGL 3.2开始，标准开始废弃立即渲染模式，鼓励开发者在OpenGL的核心模式下开发。</p>
+<blockquote>
+<p>核心模式</p>
+</blockquote>
+<p>当使用核心模式时，OpenGL迫使开发者使用现代函数，当试图调用已废弃的函数时，OpenGL会终止绘图并抛出错误。</p>
+<h2 id="扩展-Extension"><a href="#扩展-Extension" class="headerlink" title="扩展 Extension"></a>扩展 Extension</h2><p>当显卡制造商提出新特性或渲染上的大优化时，通常会在驱动中实现一些扩展。</p>
+<p>扩展为开发者提供了一些更加先进、有效的图形绘制。当开发者想使用扩展的时候，只需要检查一下显卡是否支持它即可。</p>
+<p>Just like:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (GL_ARB_extension_name) &#123;</span><br><span class="line">    <span class="comment">// 支持扩展</span></span><br><span class="line">    <span class="comment">// 使用硬件支持全新的现代特性</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 不支持扩展</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当一个扩展非常流行或非常有用，它将最终成为新的OpenGL规范。</p>
+<h2 id="状态机-State-Machine"><a href="#状态机-State-Machine" class="headerlink" title="状态机 State Machine"></a>状态机 State Machine</h2><p>OpenGL本身是一个状态机。一系列变量描述OpenGL该如何去运行。</p>
+<p>OpenGL的状态通常被称为OpenGL<strong>上下文</strong>(context)。</p>
+<p>更改OpenGL的通常途径：</p>
+<ul>
+<li><p>设置选项</p>
+</li>
+<li><p>操作缓冲</p>
+</li>
+</ul>
+<p>最后，使用当前OpenGL上下文渲染。</p>
+<blockquote>
+<p>状态的性质</p>
+</blockquote>
+<p>当改变状态时会改变上下文变量来改变状态，但改变状态后状态不会自动还原。</p>
+<blockquote>
+<p>名词表</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>状态设置函数 State-changing Function</td>
+<td>改变上下文</td>
+</tr>
+<tr>
+<td>状态使用函数 State-using Function</td>
+<td>根据当前状态执行一些操作</td>
+</tr>
+</tbody></table>
+<h2 id="对象-Object"><a href="#对象-Object" class="headerlink" title="对象 Object"></a>对象 Object</h2><blockquote>
+<p>OpenGL库使用C编写，但因为C的一部分语言结构不易被翻译到其它高级语言，因此OpenGL引入了一些抽象层。</p>
+</blockquote>
+<blockquote>
+<p>OpenGL对象是一些选项的集合，是OpenGL状态的一个子集。</p>
+<p>​                                                                                                                                  ——以上摘自 <a href="learnopengl-cn.github.io">LearnOpenGL</a></p>
+</blockquote>
+<p>个人理解：<code>OpenGL Object</code> $looks\ like$ <code>C structure</code>.</p>
+<p>理论知识学完了，<del>逝</del>是时候开始配置了！</p>
+<h2 id="CLion-GLFW-GLAD-环境配置"><a href="#CLion-GLFW-GLAD-环境配置" class="headerlink" title="CLion + GLFW + GLAD 环境配置"></a>CLion + GLFW + GLAD 环境配置</h2><p>本人翻了翻文档，看到OpenGL的的配置貌似需要CMake，所以选择使用CLion来配置（<del>其实就是只用CLion一个IDE</del>）</p>
+<p>下载：</p>
+<p><a target="_blank" rel="noopener" href="https://www.glfw.org/download.html">GLFW</a></p>
+<p><a target="_blank" rel="noopener" href="https://glad.dav1d.de/">GLAD</a></p>
+<p>根据我的电脑来看，选64bits的GLFW，OpenGL 3.3核心模式的GLAD。</p>
+<p>GLFW的链接库解压出来放在项目里我新建的lib目录里了。</p>
+<p><img src="/img/opengl-1-1.png"></p>
+<p>然后如上图把GLAD中的glad和KHR文件夹，GLFW中的GLFW文件夹放进了我新建的include文件夹里。然后把GLAD中的glad.c放在项目下任意位置，只要后面添加到CMake目标即可。</p>
+<p>最后一步配置CMake</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(LearnOpenGL)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="keyword">include</span>) <span class="comment"># 把include目录加上</span></span><br><span class="line"><span class="keyword">link_directories</span>(lib) <span class="comment"># 链接目录（glfw链接库）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(LearnOpenGL glad.c)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(LearnOpenGL glfw3 opengl32)</span><br></pre></td></tr></table></figure>
+
+<p>大功告成。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Mt. ST Maker aka Ink</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/05/14/opengl-know-what-is-the-opengl-note/">http://example.com/2022/05/14/opengl-know-what-is-the-opengl-note/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ink's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a><a class="post-meta__tags" href="/tags/OpenGL/">OpenGL</a></div><div class="post_share"><div class="social-share" data-image="/img/opengl-1-cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/04/16/Search-Algs/"><img class="next-cover" src="/img/search.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">搜索算法学习（一）DFS</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/02/01/MBR-Jumpout-1/" title="操作系统学习笔记（二）跳出MBR限制区域（前半段）"><img class="cover" src="/img/mbrjtop.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-01</div><div class="title">操作系统学习笔记（二）跳出MBR限制区域（前半段）</div></div></a></div><div><a href="/2022/01/30/MBR-Studing/" title="操作系统学习笔记（一）引导扇区"><img class="cover" src="/img/mbrtop.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-30</div><div class="title">操作系统学习笔记（一）引导扇区</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mt. ST Maker aka Ink</div><div class="author-info__description"></div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/NicholasYang21"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/NicholasYang21" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto://CrazyInk26@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Welcome to Ink's Blog!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenGL"><span class="toc-number">1.</span> <span class="toc-text">OpenGL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%BC%8F%E3%80%81%E7%AB%8B%E5%8D%B3%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F-Core-Profile-amp-Immediate-mode"><span class="toc-number">2.</span> <span class="toc-text">核心模式、立即渲染模式 Core Profile &amp; Immediate mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95-Extension"><span class="toc-number">3.</span> <span class="toc-text">扩展 Extension</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA-State-Machine"><span class="toc-number">4.</span> <span class="toc-text">状态机 State Machine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1-Object"><span class="toc-number">5.</span> <span class="toc-text">对象 Object</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CLion-GLFW-GLAD-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">6.</span> <span class="toc-text">CLion + GLFW + GLAD 环境配置</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/05/14/opengl-know-what-is-the-opengl-note/" title="opengl-know-what-is-the-opengl-note"><img src="/img/opengl-1-cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="opengl-know-what-is-the-opengl-note"/></a><div class="content"><a class="title" href="/2022/05/14/opengl-know-what-is-the-opengl-note/" title="opengl-know-what-is-the-opengl-note">opengl-know-what-is-the-opengl-note</a><time datetime="2022-05-14T06:59:37.000Z" title="发表于 2022-05-14 14:59:37">2022-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/16/Search-Algs/" title="搜索算法学习（一）DFS"><img src="/img/search.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="搜索算法学习（一）DFS"/></a><div class="content"><a class="title" href="/2022/04/16/Search-Algs/" title="搜索算法学习（一）DFS">搜索算法学习（一）DFS</a><time datetime="2022-04-16T03:58:29.000Z" title="发表于 2022-04-16 11:58:29">2022-04-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/16/POJ-1852-Ants/" title="POJ 1852 Ants 题解"><img src="/img/ants.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="POJ 1852 Ants 题解"/></a><div class="content"><a class="title" href="/2022/04/16/POJ-1852-Ants/" title="POJ 1852 Ants 题解">POJ 1852 Ants 题解</a><time datetime="2022-04-16T02:35:11.000Z" title="发表于 2022-04-16 10:35:11">2022-04-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/01/MBR-Jumpout-1/" title="操作系统学习笔记（二）跳出MBR限制区域（前半段）"><img src="/img/mbrjtop.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统学习笔记（二）跳出MBR限制区域（前半段）"/></a><div class="content"><a class="title" href="/2022/02/01/MBR-Jumpout-1/" title="操作系统学习笔记（二）跳出MBR限制区域（前半段）">操作系统学习笔记（二）跳出MBR限制区域（前半段）</a><time datetime="2022-02-01T04:42:15.000Z" title="发表于 2022-02-01 12:42:15">2022-02-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/30/MBR-Studing/" title="操作系统学习笔记（一）引导扇区"><img src="/img/mbrtop.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统学习笔记（一）引导扇区"/></a><div class="content"><a class="title" href="/2022/01/30/MBR-Studing/" title="操作系统学习笔记（一）引导扇区">操作系统学习笔记（一）引导扇区</a><time datetime="2022-01-30T10:22:36.000Z" title="发表于 2022-01-30 18:22:36">2022-01-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Mt. ST Maker aka Ink</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: '237766f87cbe20157507',
+      clientSecret: 'dc25b81a63008519bac560475776a518cffad869',
+      repo: 'nicholasyang21.github.io',
+      owner: 'NicholasYang21',
+      admin: ['NicholasYang21'],
+      id: 'f33fcab133f0cf2ee31dc8b85f4bf9d5',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !true) {
+  if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

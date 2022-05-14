@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>opengl-know-what-is-the-opengl-note</title>
+      <link href="/2022/05/14/opengl-know-what-is-the-opengl-note/"/>
+      <url>/2022/05/14/opengl-know-what-is-the-opengl-note/</url>
+      
+        <content type="html"><![CDATA[<p><strong>注意：与此笔记关联的OpenGL版本为3.3</strong></p><h2 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h2><p>OpenGL本身只是一个<strong>标准</strong>，由Khronos组织维护，OpenGL标准不是一个API，基于此标准的API通常是由显卡生产商开发的。</p><h2 id="核心模式、立即渲染模式-Core-Profile-amp-Immediate-mode"><a href="#核心模式、立即渲染模式-Core-Profile-amp-Immediate-mode" class="headerlink" title="核心模式、立即渲染模式 Core Profile &amp; Immediate mode"></a>核心模式、立即渲染模式 Core Profile &amp; Immediate mode</h2><blockquote><p>立即渲染模式</p></blockquote><p>早期OpenGL规范使用立即渲染模式（固定渲染管线）。立即渲染模式下绘制图形十分方便，但效率低，库隐藏了OpenGL的大多数功能，很难控制OpenGL的计算过程。</p><p>从OpenGL 3.2开始，标准开始废弃立即渲染模式，鼓励开发者在OpenGL的核心模式下开发。</p><blockquote><p>核心模式</p></blockquote><p>当使用核心模式时，OpenGL迫使开发者使用现代函数，当试图调用已废弃的函数时，OpenGL会终止绘图并抛出错误。</p><h2 id="扩展-Extension"><a href="#扩展-Extension" class="headerlink" title="扩展 Extension"></a>扩展 Extension</h2><p>当显卡制造商提出新特性或渲染上的大优化时，通常会在驱动中实现一些扩展。</p><p>扩展为开发者提供了一些更加先进、有效的图形绘制。当开发者想使用扩展的时候，只需要检查一下显卡是否支持它即可。</p><p>Just like:</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (GL_ARB_extension_name) &#123;</span><br><span class="line">    <span class="comment">// 支持扩展</span></span><br><span class="line">    <span class="comment">// 使用硬件支持全新的现代特性</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 不支持扩展</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当一个扩展非常流行或非常有用，它将最终成为新的OpenGL规范。</p><h2 id="状态机-State-Machine"><a href="#状态机-State-Machine" class="headerlink" title="状态机 State Machine"></a>状态机 State Machine</h2><p>OpenGL本身是一个状态机。一系列变量描述OpenGL该如何去运行。</p><p>OpenGL的状态通常被称为OpenGL<strong>上下文</strong>(context)。</p><p>更改OpenGL的通常途径：</p><ul><li><p>设置选项</p></li><li><p>操作缓冲</p></li></ul><p>最后，使用当前OpenGL上下文渲染。</p><blockquote><p>状态的性质</p></blockquote><p>当改变状态时会改变上下文变量来改变状态，但改变状态后状态不会自动还原。</p><blockquote><p>名词表</p></blockquote><table><thead><tr><th>名称</th><th>作用</th></tr></thead><tbody><tr><td>状态设置函数 State-changing Function</td><td>改变上下文</td></tr><tr><td>状态使用函数 State-using Function</td><td>根据当前状态执行一些操作</td></tr></tbody></table><h2 id="对象-Object"><a href="#对象-Object" class="headerlink" title="对象 Object"></a>对象 Object</h2><blockquote><p>OpenGL库使用C编写，但因为C的一部分语言结构不易被翻译到其它高级语言，因此OpenGL引入了一些抽象层。</p></blockquote><blockquote><p>OpenGL对象是一些选项的集合，是OpenGL状态的一个子集。</p><p>​                                                                                                                                  ——以上摘自 <a href="learnopengl-cn.github.io">LearnOpenGL</a></p></blockquote><p>个人理解：<code>OpenGL Object</code> $looks\ like$ <code>C structure</code>.</p><p>理论知识学完了，<del>逝</del>是时候开始配置了！</p><h2 id="CLion-GLFW-GLAD-环境配置"><a href="#CLion-GLFW-GLAD-环境配置" class="headerlink" title="CLion + GLFW + GLAD 环境配置"></a>CLion + GLFW + GLAD 环境配置</h2><p>本人翻了翻文档，看到OpenGL的的配置貌似需要CMake，所以选择使用CLion来配置（<del>其实就是只用CLion一个IDE</del>）</p><p>下载：</p><p><a href="https://www.glfw.org/download.html">GLFW</a></p><p><a href="https://glad.dav1d.de/">GLAD</a></p><p>根据我的电脑来看，选64bits的GLFW，OpenGL 3.3核心模式的GLAD。</p><p>GLFW的链接库解压出来放在项目里我新建的lib目录里了。</p><p><img src="/img/opengl-1-1.png"></p><p>然后如上图把GLAD中的glad和KHR文件夹，GLFW中的GLFW文件夹放进了我新建的include文件夹里。然后把GLAD中的glad.c放在项目下任意位置，只要后面添加到CMake目标即可。</p><p>最后一步配置CMake</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(LearnOpenGL)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="keyword">include</span>) <span class="comment"># 把include目录加上</span></span><br><span class="line"><span class="keyword">link_directories</span>(lib) <span class="comment"># 链接目录（glfw链接库）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(LearnOpenGL glad.c)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(LearnOpenGL glfw3 opengl32)</span><br></pre></td></tr></table></figure><p>大功告成。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+          <category> OpenGL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 计算机图形学 </tag>
+            
+            <tag> OpenGL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>搜索算法学习（一）DFS</title>
       <link href="/2022/04/16/Search-Algs/"/>
       <url>/2022/04/16/Search-Algs/</url>
